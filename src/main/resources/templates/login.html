@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>로그인</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css"/>
+    <!-- icheck bootstrap -->
+    <link
+            rel="stylesheet"
+            href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css"/>
+    <!--    로딩CSS-->
+    <link rel="stylesheet" href="/dist/css/login_loadscene.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="/" class="h3"><b>로그인</b>사이트</a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">로그인</p>
+
+            <!-- <form action="" method="post"> -->
+            <div class="input-group mb-3">
+                <input id="userid" type="text" class="form-control" placeholder="아이디" onkeyup="enterkey()"/>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input id="userpw" type="password" class="form-control" placeholder="비밀번호" onkeyup="enterkey()"/>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="social-auth-links text-center mt-2 mb-3">
+                <a id="btnlogin" class="btn btn-primary btn-lg btn-block">
+                    로그인
+                </a>
+            </div>
+            <div class="social-auth-links text-center mt-2 mb-3">
+                <a href="join" id="btnjoin" class="btn btn-primary btn-lg btn-block">
+                    회원가입
+                </a>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<div id="load"> <img src="/dist/img/spinner.gif" alt="loading"></div>
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- font awesome -->
+<!--<script-->
+<!--        src="https://kit.fontawesome.com/f8b2be0b25.js"-->
+<!--        crossorigin="anonymous"-->
+<!--&gt;</script>-->
+<!-- sweetalert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/js/login.js"></script>
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        $('#load').show();
+    }
+    $(window).on('load', function () {
+        $("#load").hide();
+    });
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            $('#load').hide();
+        }
+    }
+</script>
+</body>
+</html>

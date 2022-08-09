@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>성적수정</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css"/>
+    <!-- icheck bootstrap -->
+    <link
+            rel="stylesheet"
+            href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css"/>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="/" class="h3"><b>성적수정</b>사이트</a>
+        </div>
+
+            <div class="card-body">
+                <p class="login-box-msg" th:value="${newname}" th:text="${newname} + '님 성적수정'"></p>
+                <!-- <form action="" method="post"> -->
+                <div class="input-group mb-3">
+                    <input name="M_NAME" id="username" type="text" th:value="${newname}" class="form-control" placeholder="이름" onkeyup="enterkey()"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="M_MA" id="userma" type="text" class="form-control" th:value="${newma}" placeholder="수학" onkeyup="enterkey()"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="M_EN" id="useren" type="text" class="form-control" th:value="${newen}" placeholder="영어" onkeyup="enterkey()"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="M_KO" id="userko" type="text" class="form-control" th:value="${newko}" placeholder="국어" onkeyup="enterkey()"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="M_SI" id="usersi" type="text" class="form-control" th:value="${newsi}" placeholder="과학" onkeyup="enterkey()"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-auth-links text-center mt-2 mb-3">
+                    <a id="btnins" class="btn btn-primary btn-lg btn-block">
+                        성적수정
+                    </a>
+                </div>
+                <form action="/logout">
+                    <button class="btn btn-primary btn-lg btn-block">로그아웃</button>
+                </form>
+            </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- font awesome -->
+<!--<script-->
+<!--        src="https://kit.fontawesome.com/f8b2be0b25.js"-->
+<!--        crossorigin="anonymous"-->
+<!--&gt;</script>-->
+<!-- sweetalert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/js/updateuser.js"></script>
+</body>
+</body>
+</html>

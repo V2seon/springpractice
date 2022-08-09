@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>성적 정보</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!--    로딩CSS-->
+    <link rel="stylesheet" href="/dist/css/loadscene.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>성적 정보</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item active">성적 정보</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"></h3>
+                                <div class="input-group input-group-sm card-title" style="width: 20%;">
+                                    <input type="search" class="form-control form-control-sm"
+                                           placeholder="검색어를 입력하세요" id="titleText" name="titleText"
+                                           onkeyup="enterkey()">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-sm btn-default" onclick="searching()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <a href="/main" class="btn btn-block btn-primary">
+                                            <i class="far fa-plus-square"></i> 성적입력하기
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align:center;">No</th>
+                                        <th style="text-align:center;">이름</th>
+                                        <th style="text-align:center;">수학</th>
+                                        <th style="text-align:center;">영어</th>
+                                        <th style="text-align:center;">국어</th>
+                                        <th style="text-align:center;">과학</th>
+                                        <th style="text-align:center;">수정</th>
+                                        <th style="text-align:center;">삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="userlist">
+                                    <tr th:if="${userlist}!=null"
+                                        th:each="Co : ${userlist}">
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mpk}!= null"
+                                                  th:text="${Co.mpk}" id="mpk">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mname}!= null"
+                                                  th:text="${Co.mname}" id="mname">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mMa}!= null"
+                                                th:text="${Co.mMa}" id="mMa">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mEn}!= null"
+                                                  th:text="${Co.mEn}" id="mEn">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mKo}!= null"
+                                                  th:text="${Co.mKo}" id="mKo">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span th:if="${Co.mSi}!= null"
+                                                  th:text="${Co.mSi}" id="mSi">
+                                            </span>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a th:if="${Co.mpk}!= null" id="modify"
+                                               th:href="@{/modify_page(mpk=${Co.mpk})}">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <button id="deletebtn" class="row justify-content-center btn btn-danger"
+                                            th:data-notify="${Co.mpk}" type="button" data-toggle="modal"
+                                            data-target="#modal-delete"
+                                            th:onclick="|javascript:passValue(${Co.mpk})|"> 삭제
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
+                                    <li class="page-item">
+                                        <a class="page-link" aria-label="Previous"
+                                           th:onclick="|javascript:paging(0)|"><span>처음</span></a>
+                                    </li>
+                                    <li class="page-item prev-page" th:if="${isPrevSection}"
+                                        th:value="${thisSection}">
+                                        <a class="page-link" aria-label="Previous"
+                                           th:onclick="|javascript:paging(${firstBtnIndex}-1)|">이전</a>
+                                    </li>
+                                    <!--            onclick 구현-->
+                                    <li th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
+                                        id="pageItem" class="page-item"
+                                        th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}"><a
+                                            class="page-link" th:onclick="|javascript:paging(${page})|"><span
+                                            th:text="${page+1}"></span></a></li>
+                                    <!--            onclick 구현-->
+                                    <!--다음버튼2-->
+                                    <li class="page-item next-page" th:if="${isNextSection}"
+                                        th:onclick="|javascript:paging(${lastBtnIndex}+1)|"
+                                        th:value="${thisSection}">
+                                        <a class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">다음</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                    <!--다음버튼2-->
+                                    <li class="page-item">
+                                        <a class="page-link" id="pageItem2"
+                                           th:onclick="|javascript:paging(${totalPage})|"
+                                           aria-label="Previous">끝</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+<!--    <div th:insert="common/footer.html"></div>-->
+
+<!--    &lt;!&ndash; Control Sidebar &ndash;&gt;-->
+<!--    <aside class="control-sidebar control-sidebar-dark">-->
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<div id="load"><img src="/dist/img/spinner.gif" alt="loading"></div>
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+
+<script src="/js/survey/surveyList.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/js/user.js"></script>
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        $('#load').show();
+    }
+    $(window).on('load', function () {
+        $("#load").hide();
+    });
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            $('#load').hide();
+        }
+    }
+</script>
+</body>
+
+</html>
