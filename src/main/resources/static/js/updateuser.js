@@ -87,7 +87,7 @@ function handlerLogin() {
          return false;
     }else {
         $('#load').show();
-        let sendData = {
+        const sendData = {
             "username" : userName.value,
             "userma" : userMa.value,
             "useren" : userEn.value,
@@ -100,7 +100,7 @@ function handlerLogin() {
             type     : "POST",
             success : function(result) {
                     location.href = "/user";
-                },
+            },
             error : function(request,status,error){
                 $('#load').hide();
                 swal({

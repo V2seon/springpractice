@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long>, QuerydslPredicateExecutor<MemberEntity> {
       // MemberEntity 에서 가져온 m_name이 포함된 행의 정보를 가져옴 => findByMname
       Optional <MemberEntity> findByMname(String m_name);
+
       List<MemberEntity> findByMpk(Long m_pk);
 
 }

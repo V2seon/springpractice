@@ -140,11 +140,11 @@
                                            th:onclick="|javascript:paging(${firstBtnIndex}-1)|">이전</a>
                                     </li>
                                     <!--            onclick 구현-->
-                                    <li th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
-                                        id="pageItem" class="page-item"
-                                        th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}"><a
-                                            class="page-link" th:onclick="|javascript:paging(${page})|"><span
-                                            th:text="${page+1}"></span></a></li>
+<!--                                    <li th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"-->
+<!--                                        id="pageItem" class="page-item"-->
+<!--                                        th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}"><a-->
+<!--                                            class="page-link" th:onclick="|javascript:paging(${page})|"><span-->
+<!--                                            th:text="${page+1}"></span></a></li>-->
                                     <!--            onclick 구현-->
                                     <!--다음버튼2-->
                                     <li class="page-item next-page" th:if="${isNextSection}"

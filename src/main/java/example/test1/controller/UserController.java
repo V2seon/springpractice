@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/modify_page")
-    public String moveModify(Model model,
+    public String moveModify(Model model, HttpSession session,
                              @RequestParam(required = false, defaultValue = "",value = "mpk")Long mpk){
         Long newpk;
         String newname;
@@ -63,6 +63,7 @@ public class UserController {
         newsi = memberEntities.get(0).getMSi();
         newen = memberEntities.get(0).getMEn();
         newko = memberEntities.get(0).getMKo();
+        session.setAttribute("newpk", newpk);
         model.addAttribute("newpk",newpk);
         model.addAttribute("newname",newname);
         model.addAttribute("newma",newma);
@@ -72,13 +73,15 @@ public class UserController {
         return "updateuser.html";
     }
     @PostMapping("/modify")
-    public String modify(@RequestParam(required = false, defaultValue = "", value = "mpk")Long mpk,
+    public String modify(HttpSession session,
+                         @RequestParam(required = false, defaultValue = "", value = "mpk")Long mpk,
                          @RequestParam(required = false, defaultValue = "", value = "username")String mname,
                          @RequestParam(required = false, defaultValue = "", value = "userma")int mma,
                          @RequestParam(required = false, defaultValue = "", value = "usersi")int msi,
                          @RequestParam(required = false, defaultValue = "", value = "userko")int mko,
                          @RequestParam(required = false, defaultValue = "", value = "useren")int men){
-        MemberDto memberDto = new MemberDto(mpk,mname, mma,men,mko,msi);
+        mpk = (Long) session.getAttribute("newpk");
+        MemberDto memberDto = new MemberDto(mpk,mname,mma,men,mko,msi);
         userService.set_modify(memberDto);
         return "/user";
     }
@@ -112,7 +115,7 @@ public class UserController {
         return "/user :: #userlist"; // 테이블쪽으로 배치하겠다는 뜻인 듯.
     }
 
-    //2.페이징 기능
+    //2.페이징 기능-
     @RequestMapping(value = "/paging", method = RequestMethod.POST) // 비동기 페이지네이션
     public String pagingButton(Model model,
                                @RequestParam(required = false, defaultValue = "0", value = "page") int page,

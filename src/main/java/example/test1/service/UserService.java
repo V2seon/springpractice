@@ -22,14 +22,17 @@ public class UserService {
     public Page <MemberEntity> selectALLTable(String mname, Pageable pageable){
         return memberRepository.findAll(MemberTablePredicate.search(mname),pageable);
     }
+
     @Transactional
     public List <MemberEntity> modify_page(Long mpk){
         return memberRepository.findByMpk(mpk);
     }
+
     @Transactional
     public Long set_modify(MemberDto memberDto){
         return memberRepository.save(memberDto.toEntity()).getMpk();
     }
+
     @Transactional
     public void delete(Long mpk){
         memberRepository.deleteById(mpk);
