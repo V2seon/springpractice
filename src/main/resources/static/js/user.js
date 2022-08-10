@@ -1,4 +1,5 @@
 const deletebtn = document.getElementById("deletebtn");
+
 deletebtn.addEventListener("click", deletePost);
 
 function deletePost(){

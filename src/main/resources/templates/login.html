@@ -95,5 +95,18 @@
         }
     }
 </script>
+<script>
+window.onbeforeunload = function () {
+$('#load').show();
+}
+$(window).on('load', function () {
+$("#load").hide();
+});
+window.onpageshow = function(event) {
+if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+$('#load').hide();
+}
+}
+</script>
 </body>
 </html>

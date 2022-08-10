@@ -1,5 +1,6 @@
 package example.test1.controller;
 
+import example.test1.common.SessionCheck;
 import example.test1.dto.MemberDto;
 import example.test1.entity.MemberEntity;
 import example.test1.service.MemberService;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -20,9 +22,13 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/indata")
-    public String insertDataForm(Model model, HttpSession session){
-        model.addAttribute("myname", new MemberDto());
-        return "/main";
+    public String insertDataForm(Model model, HttpSession session, HttpServletRequest request){
+        if (new SessionCheck().loginSessionCheck(request)){
+            model.addAttribute("myname", new MemberDto());
+            return "/main";
+        }else{
+            return "redirect:/";
+        }
     }
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST ,value = "/insert")

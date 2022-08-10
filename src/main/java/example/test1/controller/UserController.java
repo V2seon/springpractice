@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,47 +31,54 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user")
-    public String user(Model model, Pageable pageable, HttpSession session,
+    public String user(Model model, Pageable pageable, HttpServletRequest session,
                        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
                        @RequestParam(required = false, defaultValue = "", value = "mname")String mname){
-
-        pageable = PageRequest.of(page, 10, Sort.by("mpk").descending());
-        Page<MemberEntity> memberEntities = userService.selectALLTable(mname, pageable);
-        Pagination pagination = new Pagination(memberEntities.getTotalPages(), page);
-        model.addAttribute("userlist", memberEntities);
-        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
-        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
-        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
-        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
-        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
-        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
-        return "user.html";
+        if (new SessionCheck().loginSessionCheck(session)){
+            pageable = PageRequest.of(page, 10, Sort.by("mpk").descending());
+            Page<MemberEntity> memberEntities = userService.selectALLTable(mname, pageable);
+            Pagination pagination = new Pagination(memberEntities.getTotalPages(), page);
+            model.addAttribute("userlist", memberEntities);
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+            return "user.html";
+        }else{
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/modify_page")
-    public String moveModify(Model model, HttpSession session,
+    public String moveModify(Model model, HttpSession session, HttpServletRequest request,
                              @RequestParam(required = false, defaultValue = "",value = "mpk")Long mpk){
-        Long newpk;
-        String newname;
-        int newma;
-        int newsi;
-        int newen;
-        int newko;
-        List<MemberEntity> memberEntities = userService.modify_page(mpk);
-        newpk = memberEntities.get(0).getMpk();
-        newname = memberEntities.get(0).getMname();
-        newma = memberEntities.get(0).getMMa();
-        newsi = memberEntities.get(0).getMSi();
-        newen = memberEntities.get(0).getMEn();
-        newko = memberEntities.get(0).getMKo();
-        session.setAttribute("newpk", newpk);
-        model.addAttribute("newpk",newpk);
-        model.addAttribute("newname",newname);
-        model.addAttribute("newma",newma);
-        model.addAttribute("newsi",newsi);
-        model.addAttribute("newen",newen);
-        model.addAttribute("newko",newko);
-        return "updateuser.html";
+        if (new SessionCheck().loginSessionCheck(request)){
+            Long newpk;
+            String newname;
+            int newma;
+            int newsi;
+            int newen;
+            int newko;
+            List<MemberEntity> memberEntities = userService.modify_page(mpk);
+            newpk = memberEntities.get(0).getMpk();
+            newname = memberEntities.get(0).getMname();
+            newma = memberEntities.get(0).getMMa();
+            newsi = memberEntities.get(0).getMSi();
+            newen = memberEntities.get(0).getMEn();
+            newko = memberEntities.get(0).getMKo();
+            session.setAttribute("newpk", newpk);
+            model.addAttribute("newpk",newpk);
+            model.addAttribute("newname",newname);
+            model.addAttribute("newma",newma);
+            model.addAttribute("newsi",newsi);
+            model.addAttribute("newen",newen);
+            model.addAttribute("newko",newko);
+            return "updateuser.html";
+        }else{
+            return "redirect:/";
+        }
     }
     @PostMapping("/modify")
     public String modify(HttpSession session,
