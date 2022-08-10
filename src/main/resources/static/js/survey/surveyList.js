@@ -145,16 +145,16 @@ function paging(pageValue) {
 
 
     $.ajax({
-        url: "/survey/querydsl",
+        url: "/querydsl",
         data: querydata,
         type: "POST",
     }).done(function (fragment) {
-        $("#wangin_survey_list").replaceWith(fragment);
+        $("#userlist").replaceWith(fragment);
 
     });
 
     $.ajax({
-        url: "/survey/paging",
+        url: "/paging",
         data: querydata,
         type: "POST",
     }).done(function (fragment) {
