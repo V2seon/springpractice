@@ -35,7 +35,7 @@ public class UserController {
                        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
                        @RequestParam(required = false, defaultValue = "", value = "mname")String mname){
         if (new SessionCheck().loginSessionCheck(session)){
-            pageable = PageRequest.of(page, 10, Sort.by("mpk").descending());
+            pageable = PageRequest.of(page, 15, Sort.by("mpk").descending());
             Page<MemberEntity> memberEntities = userService.selectALLTable(mname, pageable);
             Pagination pagination = new Pagination(memberEntities.getTotalPages(), page);
             model.addAttribute("userlist", memberEntities);
@@ -98,7 +98,7 @@ public class UserController {
         System.out.println("인덱스값");
         System.out.println(delete_index);
         userService.delete(delete_index);
-        return "/user";
+        return "/user :: #userlist";
     }
 
     //1.검색 및 검색 필터
@@ -107,7 +107,7 @@ public class UserController {
                           @RequestParam(required = false, defaultValue = "0", value = "page") int page,
                           @RequestParam(required = false, defaultValue = "", value = "titleText") String titleText,
                           Pageable pageable) {
-        pageable = PageRequest.of(page, 10, Sort.by("mpk").descending());
+        pageable = PageRequest.of(page, 15, Sort.by("mpk").descending());
         Page<MemberEntity> pageList = userService.selectALLTable(titleText, pageable);
 
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
@@ -130,7 +130,7 @@ public class UserController {
                                @RequestParam(required = false, defaultValue = "", value = "titleText") String titleText,
                                Pageable pageable) {
 
-        pageable = PageRequest.of(page, 10, Sort.by("mpk").descending());
+        pageable = PageRequest.of(page, 15, Sort.by("mpk").descending());
         int totalPages = userService.selectALLTable(titleText, pageable).getTotalPages();
 
         Pagination pagination = new Pagination(totalPages, page);

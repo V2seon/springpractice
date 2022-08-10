@@ -1,6 +1,3 @@
-const deletebtn = document.getElementById("deletebtn");
-deletebtn.addEventListener("click", deletePost);
-
 function deletePost(){
     var delete_index = $('#modal-delete').attr('name');
     var data = {
@@ -20,5 +17,12 @@ function deletePost(){
         success: function(data){
             searching();
         }
+    });
+}
+
+// 삭제버튼 누르면 경고창을 띄움
+function passValue(obj){
+$('#modal-delete').on('show.bs.modal', function(e){
+    document.getElementById('modal-delete').setAttribute('name', obj);
     });
 }
