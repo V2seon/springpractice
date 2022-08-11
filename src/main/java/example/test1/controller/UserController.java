@@ -91,7 +91,7 @@ public class UserController {
         mpk = (Long) session.getAttribute("newpk");
         MemberDto memberDto = new MemberDto(mpk,mname,mma,men,mko,msi);
         userService.set_modify(memberDto);
-        return "/user";
+        return "/user :: #userlist";
     }
     @PostMapping("/delete")
     public String delete(@RequestParam(required = false, defaultValue = "", value = "delete_index")Long delete_index){
